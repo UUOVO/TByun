@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../../../js/HttpService.js"></script>
+		<script src="../../../js/util.js"></script>
+		<link rel="stylesheet" type="text/css" href="../public.css" />
+	</head>
+	<body>
+		<div id="title">
+			<img src="../../../images/userinfo.png" />
+			<span>个人信息</span>
+		</div>
+		<div id="userinfo">
+			<form name="info">
+				<table>
+					<tr>
+						<td>姓名：</td>
+						<td><input name="username" type="text" disabled="disabled" /></td>
+					</tr>
+					<tr>
+						<td>学号：</td>
+						<td><input name="studentId" type="text" disabled="disabled" /></td>
+					</tr>
+					<tr>
+						<td>角色：</td>
+						<td style="text-align: left;">
+							<input name="role" id="role1" type="radio" value="1" disabled="disabled" />
+							<label for="role1">学生</label>
+							<input name="role" id="role0" type="radio" value="0" disabled="disabled" />
+							<label for="role0">管理员</label>
+						</td>
+					</tr>
+					<tr class="table-bom">
+						<td colspan="2"><button type="button" class="but1" onclick="updata()">修改</button></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+		<!-- 弹窗 -->
+		<div id="addUserbox" class="pop">
+			<div class="pop-top">
+				<div class="pop-top-title">
+					<img src="../../../images/userinfo.png" />
+					<span>添加用户</span>
+				</div>
+				<div onclick="popClose()" class="pop-close">
+					<img src="../../../images/close.png" />
+				</div>
+			</div>
+
+			<iframe src="adduser.html"></iframe>
+		</div>
+	</body>
+</html>
+<script type="text/javascript">
+	window.onload = function() {
+		let id = localStorage.getItem('studentId')
+		httpService.post('/user/getUserById', {
+			'studentId': id
+		}, res => {
+			info.username.value = res.username;
+			info.studentId.value = res.id;
+			info.role.value = res.role;
+			console.log(info.role.value)
+
+		}, err => {
+			console.log('失败')
+		})
+	}
+	
+	function updata(){
+		let id = localStorage.getItem('studentId');
+		window.dataset = {
+			'student': id
+		}
+		$('.pop iframe').src = 'updataUserInfo.html';
+		$('.pop-top-title span').innerHTML = '修改用户信息';
+		$('#addUserbox').style.display = 'block';
+	}
+</script>

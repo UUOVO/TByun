@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../../../js/HttpService.js"></script>
+		<script src="../../../js/util.js"></script>
+		<link rel="stylesheet" type="text/css" href="../public.css" />
+		<style>
+			#list img{
+				width: 25px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="title">
+			<img src="../../../images/order.png" />
+			<span>图书列表</span>
+		</div>
+		<div id="top">
+			<button class="btn2" type="button" style="padding: 0 10px;" onclick="addBook()">添加图书</button>
+		</div>
+		<div id="list">
+			<table class="listtable">
+				<thead>
+					<tr>
+						<th>书号</th>
+						<th>书名</th>
+						<th>封面</th>
+						<th>作者</th>
+						<th>出版社</th>
+						<th>简述</th>
+						<th>库存</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+				<!-- <tr>
+					<td>1205413894116</td>
+					<td>计算机组成原理</td>
+					<td>计算机</td>
+					<td>林钟宝</td>
+					<td>清华大学出版社</td>
+					<td>计算改好价格很高机</td>
+					<td>
+						<button class="btn2">修改</button>
+						<button class="btn4">删除</button>
+					</td>
+				</tr> -->
+			</table>
+		</div>
+		<!-- 弹窗 -->
+		<div id="addUserbox" class="pop">
+			<div class="pop-top">
+				<div class="pop-top-title">
+					<img src="../../../images/userinfo.png" />
+					<span>添加用户</span>
+				</div>
+				<div onclick="popClose()" class="pop-close">
+					<img src="../../../images/close.png" />
+				</div>
+			</div>
+
+			<iframe src="adduser.html" style="height:360px"></iframe>
+		</div>
+	</body>
+</html>
+<script>
+	window.onload = function() {
+		getBookList()
+	}
+	
+	function getBookList(){
+		httpService.get('/book/findBook', {
+		
+		}, res => {
+			let temp = '';
+			res.forEach(i => {
+				temp +=
+					`<tr>
+						<td>${i.id}</td>
+						<td>${i.bookname}</td>
+						<td><img src="../../../images/29159887-1_w_3.jpg" /></td>
+						<td>${i.author}</td>
+						<td>${i.press}</td>
+						<td style="width:200px;"><p class="longtext">${i.describe}</p></td>
+						<td>${i.num}</td>
+						<td>
+							<button class="btn2" onclick="showbook(${i.id},'${i.bookname}')">库存</button>
+							<button class="btn2" onclick="updataBook(${i.id})">修改</button>
+							<button class="btn4" onclick="deleteBook(${i.id})">删除</button>
+						</td>
+					</tr>`;
+			})
+			$('#list tbody').innerHTML = temp;
+		}, err => {
+		
+		})
+	}
+
+	function addBook() {
+		$('#addUserbox span').innerHTML = '添加图书';
+		$('.pop iframe').src = 'addBook.html';
+		$('#addUserbox').style.display = 'block'
+	}
+	
+	function updataBook(id){
+		window.dataset = {
+			'bookId': id
+		}
+		$('.pop iframe').src = 'updataBook.html';
+		$('.pop-top-title span').innerHTML = '修改图书信息';
+		$('#addUserbox').style.display = 'block';
+	}
+	
+	function showbook(id,name){
+		window.dataset = {
+			'bookId': id
+		}
+		$('.pop iframe').src = 'bookwarehouse.html';
+		$('.pop-top-title span').innerHTML = name;
+		$('#addUserbox').style.display = 'block';
+	}
+	
+	function deleteBook(id){
+		httpService.post('/book/delBook', {
+			'bookid':id
+		}, res => {
+			alert(res.msg)
+			location.reload()
+		}, err => {
+			alert(err.msg)
+		})
+	}
+</script>

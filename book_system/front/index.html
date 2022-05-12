@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>白云图书馆·首页</title>
+		<script src="js/HttpService.js"></script>
+		<script src="js/util.js"></script>
+		<link rel="stylesheet" href="css/public.css">
+		<link rel="stylesheet" href="css/index.css">
+	</head>
+	<body>
+		<!-- 头部 -->
+		<div class="top">
+			<div class="header">
+				<div class="logo" style="margin-left: 20px;">
+					<img src="images/logo1x.png" alt="BaiYunLibrary">
+				</div>
+				<div class="nav">
+					<ul class="mol">
+						<li><a href="index.html" class="active">首页</a></li>
+						<li><a href="javascript:;">图书查询</a></li>
+						<li><a href="src/admin/admin.html">个人中心</a></li>
+					</ul>
+					<div class="btn_area">
+						<a href="src/login.html" class="login">登录</a>
+						<!-- <a href="" class="reg">注册</a> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 内容 -->
+		<div class="contain">
+			<div class="form_group">
+				<div class="title_check">
+					<div>书籍名称</div>
+					<ul style="display: none;">
+						<li><a href="">书籍名称</a></li>
+						<li><a href=""></a>作家</li>
+						<li><a href=""></a>出版社</li>
+					</ul>
+				</div>
+				<input name="" type="hidden" value="title" id="inputselect1" />
+				<div id="form_group_searchbox">
+					<input id="keyword" name="q" class="keyword" placeholder="" type="text" />
+					<input class="submit_btn" type="button" value="检索" onclick="search()"/>
+				</div>
+
+			</div>
+		</div>
+		</div>
+		<!-- 版权 -->
+		<div class="page-copy">
+			<p>版权所有©白云图书馆 粤ICP证号:20211206</p>
+		</div>
+
+	</body>
+</html>
+<script>
+	window.onload = function(){
+		loginVerify()
+	}
+	function search(){
+		let keyword = $('#keyword').value;
+		location.href='src/search.html?keyword='+keyword;
+	}
+</script>

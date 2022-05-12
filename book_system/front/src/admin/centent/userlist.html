@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../public.css" />
+		<script src="../../../js/HttpService.js"></script>
+		<script src="../../../js/util.js"></script>
+	</head>
+	<body>
+		<div id="title">
+			<img src="../../../images/userinfo.png" />
+			<span>用户列表</span>
+		</div>
+		<div id="top">
+			<button class="btn2" type="button" style="padding: 0 10px;" onclick="showPop()">添加用户</button>
+		</div>
+		<div id="list">
+			<table id="list-tb" class="listtable">
+				<thead>
+					<tr>
+						<th>学号</th>
+						<th>姓名</th>
+						<th>角色</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+
+				</tbody>
+				<!-- <tr>
+					<td>1205413894116</td>
+					<td>林钟宝</td>
+					<td>计算机组成原理</td>
+					<td>
+						<button class="btn2">修改</button>
+						<button class="btn4">删除</button>
+					</td>
+				</tr> -->
+
+			</table>
+		</div>
+		<!-- 弹窗 -->
+		<div id="addUserbox" class="pop">
+			<div class="pop-top">
+				<div class="pop-top-title">
+					<img src="../../../images/userinfo.png" />
+					<span>添加用户</span>
+				</div>
+				<div onclick="popClose()" class="pop-close">
+					<img src="../../../images/close.png" />
+				</div>
+			</div>
+
+			<iframe src="adduser.html"></iframe>
+		</div>
+	</body>
+</html>
+
+
+<script>
+	window.onload = function() {
+		document.cookie = 'test=123;path=/'
+		httpService.get('/user/getUserList', {}, res => {
+			let temp = ''
+			res.forEach(i => {
+				temp +=
+					`
+				<tr>
+					<td>${i.id}</td>
+					<td>${i.username}</td>
+					<td>${i.role==1?'学生':'管理员'}</td>
+					<td>
+						<button class="btn2" onclick="updata(${i.id})">修改</button>
+						<button class="btn4" onclick="deleteUser(${i.id})">删除</button>
+					</td>
+				</tr>`;
+			})
+			$('#list-tb tbody').innerHTML = temp;
+		}, err => {
+
+		})
+	}
+	
+	function showPop() {
+		$('#title span').innerHTML = '添加用户';
+		$('#addUserbox').style.display = 'block'
+	}
+	
+	
+	
+	function updata(id){
+		window.dataset = {
+			'student': id
+		}
+		$('.pop iframe').src = 'updataUserInfo.html';
+		$('.pop-top-title span').innerHTML = '修改用户信息';
+		$('#addUserbox').style.display = 'block';
+	}
+	
+	function deleteUser(id){
+		httpService.post('/user/delUser',{
+			'studentId' : id
+		}, res => {
+			alert(res.msg)
+			location.reload()
+		},err=>{
+			
+		})
+	}
+</script>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../public.css"/>
+		<script src="../../../js/HttpService.js" type="text/javascript" charset="utf-8"></script>
+	</head>
+	<body>
+		<div id="addUser">
+			<form name="info">
+				<table>
+					<tr>
+						<td>书名：</td>
+						<td><input name="bookname" type="text" /></td>
+					</tr>
+					<tr>
+						<td>作者：</td>
+						<td><input name="author" type="text" /></td>
+					</tr>
+					<tr>
+						<td>出版社：</td>
+						<td><input name="press" type="text" /></td>
+					</tr>
+					<tr>
+						<td>状态：</td>
+						<td style="text-align: left;">
+							<input name="state" id="role1" type="radio" value="1"/>
+							<label for="role1">上架</label>
+							<input name="state" id="role0" type="radio" value="0"/>
+							<label for="role0">下架</label>
+						</td>
+					</tr>
+					<tr>
+						<td>简述：</td>
+						<td><textarea name="describe"></textarea></td>
+					</tr>
+					<tr class="table-bom">
+						<td colspan="2"><button type="button" class="btn6" onclick="updataBook()">修改</button></td>
+					</tr>
+				</table>
+			</form>
+		</div>
+	</body>
+</html>
+
+<script>
+	window.onload=function(){
+		let id = window.parent.dataset.bookId
+		httpService.post('/book/getBookById',{
+			'bookId' : id
+		},res=>{
+			info.bookname.value = res.bookname;
+			info.author.value = res.author;
+			info.press.value = res.press;;
+			info.state.value = res.state;;
+			info.describe.value = res.describe;;
+		},err=>{
+			console.log('失败')
+		})
+	}
+	
+	function updataBook(){
+		let bookname = info.bookname.value;
+		let author = info.author.value;
+		let press = info.press.value;
+		let state = info.state.value;
+		let describe = info.describe.value;
+
+		httpService.post('/book/modifyBook',{
+			'bookname':bookname,
+			'author':author,
+			'press':press,
+			'state':state,
+			'describe':describe
+		},res=>{
+			alert(res.msg);
+			window.parent.location.reload()
+		},err=>{
+			alert(err.msg);
+		})
+	}
+</script>

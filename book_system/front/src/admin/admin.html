@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>白云图书馆-用户管理</title>
+		<script src="../../js/HttpService.js"></script>
+		<script src="../../js/util.js"></script>
+		<link rel="stylesheet" type="text/css" href="../../css/public.css"/>
+		<style>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body{
+				width: 100%;
+				min-width: 1200px;
+				background: #F2F8FF;
+				display: flex;
+				flex-direction: column;
+				height: 100vh;
+			}
+			
+			iframe {
+				border: none;
+			}
+			#header{
+				width: 100%;
+			}
+			
+			#contain{
+				width: 1200px;
+				margin: 0 auto;
+				display: flex;
+				flex: 1;
+				padding: 20px 0;
+			}
+			#side{
+				width: 200px;
+				overflow: hidden;
+			}
+			
+			#side ul {
+				background: white;
+				list-style: none;
+				border-radius: 10px;
+			}
+			a {
+				text-decoration: none;
+			}
+			
+			#side ul a {
+				width: 100%;
+				display: block;
+				text-align: center;
+				font-size: 16px;
+				font-weight: 400;
+				line-height: 60px;
+				color: #333333;
+			}
+			
+			#side ul a:hover {
+				background: #E9F3FF;
+				color: #0B69D3;
+			}
+			/*  */
+			#content{
+				background: white;
+				margin-left: 20px;
+				border-radius: 10px;
+				flex: 1;
+			}
+			#content-if{
+				width: 100%;
+				height: 100%;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- 头部 -->
+		<div class="top">
+			<div class="header page">
+				<div class="logo">
+					<img src="../../images/logo1x.png" alt="BaiYunLibrary">
+				</div>
+				<div class="nav">
+					<ul class="mol">
+						<li><a href="../../index.html" class="active">首页</a></li>
+						<li><a href="javascript:;">图书查询</a></li>
+						<li><a href="admin.html">个人中心</a></li>
+					</ul>
+					<div class="btn_area">
+						<a href="" class="login">登录</a>
+						<!-- <a href="" class="reg">注册</a> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="contain">
+			<aside id="side" >
+				<ul>
+					<li data-href="userinfo.html"><a href="javascript:;">个人信息</a></li>
+					<li data-href="order.html"><a href="javascript:;">借书记录</a></li>
+					
+				</ul>
+			</aside>
+			<div id="content">
+				<iframe id="content-if" src="centent/userinfo.html"></iframe>
+			</div>
+		</div>
+	</body>
+</html>
+
+<script>
+	window.onload=function(){
+		loginVerify()
+		let username = localStorage.getItem('username');
+		let id = localStorage.getItem('studentId');
+		let role = localStorage.getItem('role');
+		if(!username || !id){
+			alert('请先登录');
+			location.href = '../login.html'
+		}
+		let shref = localStorage.getItem('href');
+		if(shref){
+			document.getElementById('content-if').src =shref;
+		}
+		
+		if(role == 0)
+			$('#side ul').innerHTML+=`<li data-href="userlist.html"><a href="javascript:;">用户列表</a></li>
+					<li data-href="booklist.html"><a href="javascript:;">图书列表</a></li>`;
+		
+		let sidelist = $('#side ul').children;
+		for(let i = 0;i < sidelist.length;i++){
+			sidelist[i].onclick = function(){
+				let href =  'centent/' + this.dataset.href;
+				localStorage.setItem('href','centent/' + this.dataset.href)
+				document.getElementById('content-if').src =href;
+			}
+		}
+	}
+</script>

@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel="stylesheet" href="../css/public.css" />
+		<link rel="stylesheet" href="../css/search.css">
+		<script src="../js/HttpService.js"></script>
+		<script src="../js/util.js"></script>
+		<style>
+			.pop {
+				position: fixed;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				background: white;
+				box-shadow: #808080 0px 0px 20px;
+				border-radius: 10px;
+				padding: 20px;
+				display: none;
+			}
+			
+			.pop iframe {
+				border: none;
+			}
+			
+			.pop-top {
+				display: flex;
+				justify-content: space-between;
+			}
+			
+			.pop-close {
+				cursor: pointer;
+			}
+			
+			.pop-top-title {
+				font-size: 16px;
+				font-family: Source Han Sans CN;
+				font-weight: bold;
+				color: #333333;
+				margin-bottom: 20px;
+			}
+		</style>
+		<title>白云图书馆·图书查询</title>
+	</head>
+	<body>
+		<!-- 头部 -->
+		<div class="top">
+			<div class="header page">
+				<div class="logo">
+					<img src="../images/logo1x.png" alt="BaiYunLibrary">
+				</div>
+				<div class="nav">
+					<ul class="mol">
+						<li><a href="../index.html" class="active">首页</a></li>
+						<li><a href="">图书查询</a></li>
+						<li><a href="javascript:;">图书查询</a></li>
+						<li><a href="admin/admin.html">个人中心</a></li>
+					</ul>
+					<div class="btn_area">
+						<a href="" class="login">登录</a>
+						<!-- <a href="" class="reg">注册</a> -->
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="pw">
+			<div class="form_group">
+				<div class="dropdown">
+					<button class="dropbtn"><img src="../images/下拉1.png" alt="">书名</button>
+					<div class="dropdown-content">
+						<a href="#">书名</a>
+						<a href="#">图书序号</a>
+						<a href="#">类别</a>
+						<a href="#">作者</a>
+						<a href="#">出版社</a>
+					</div>
+				</div>
+				<form name="search" action="search.html">
+					<input type="text" class="keyword" name="keyword" placeholder="请输入">
+					<button class="submit_btn">搜索</button>
+				</form>
+			</div>
+		</div>
+		<!-- 主页内容 -->
+		<div class="contain">
+			<!-- 头部页面跳转 -->
+			<!-- <div class="meneame">
+				<span class="disabled">共 3 页</span>
+				<a href="index.html">首页</a>
+				<a href="#">&lt;上一页</a>
+				<b>1</b>
+				<a href="a">2</a>
+				<a href="a">3</a>
+				<a href="#">下一页&gt;</a>&nbsp;
+				<a href="#">尾页&gt;&gt;</a>
+			</div> -->
+			<div class="resultList">
+				<table class="resultTable">
+					<!-- 第一个查询结果 -->
+					<!-- <tr>
+						<td width="20px">
+							<input type="checkbox" name="bookItemCheckbox" id="bookItem_3004374569" value="3004374569" />
+						</td>
+						<td width="20px">
+							1.
+						</td>
+
+						<td class="coverTD">
+							<a href="">
+								<img class="bookcover_img" src="" isbn="978-7-121-40863-2" bookrecno="3004374569" />
+							</a>
+						</td>
+						<td class="bookmetaTD">
+							<div class="bookmeta" bookrecno="3004374569" booktype="1">
+								<div id="bookid_3004">
+									<span class="bookmetaTitle">
+										<a class="title-link" href="" id="title_3004374569">
+											计算机网络
+										</a>
+									</span>
+									<span class="book_state"><span class="book_in">在馆(3)</span>/馆藏(8)
+								</div>
+								<div class="public_color">
+									书号:
+									<a class="num-link" href="" target="_blank">20211208</a>
+									<div class="public_color">
+										著者:
+										<a class="author-link" href="" target="_blank">谢希仁&nbsp;&nbsp;&nbsp;&nbsp;</a>
+
+										出版社:
+										<a class="publisher-link" href="" target="_blank">电子工业出版社</a>
+										&nbsp;&nbsp;&nbsp;&nbsp;
+
+										出版日期: <span class="year">2021&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+										类别: <span class="book_ls">图书&nbsp;&nbsp;&nbsp;&nbsp;</span>
+										<button class="borrow_btn">借阅</button>
+									</div>
+									<div class="detail_w">
+										详情:
+										<a href="" class="book_detail">本书分为9章，比较全面系统地介绍了计算机网络的发展和原理体系结构、物理层、数据链路层(包括局域网)、
+											网络层、运输层、应用层、网络安全、互联网上的音频/视频服务，
+											以及无线网络和移动网络等内容。各章均附有习题。-->
+					<!-- </a>
+									</div>
+
+								</div>
+
+						</td>
+					</tr> -->
+					<!-- 第一个查询结果end -->
+				</table>
+				<!-- 查询内容end -->
+
+
+				<!-- 底部页面跳转按钮 -->
+			</div>
+			<!-- <div class="meneame">
+				<span class="disabled">共 3 页</span>
+				<a href="index.html">首页</a>
+				<a href="#">&lt;上一页</a>
+				<b>1</b>
+				<a href="a">2</a>
+				<a href="a">3</a>
+				<a href="#">下一页&gt;</a>&nbsp;
+				<a href="#">尾页&gt;&gt;</a>
+			</div> -->
+
+		</div>
+		<!-- 版权 -->
+		<div class="page-copy page">
+			<p>版权所有©白云图书馆 粤ICP证号:20211206</p>
+		</div>
+
+		<!-- 弹窗 -->
+		<div id="addUserbox" class="pop">
+			<div class="pop-top">
+				<div class="pop-top-title">
+					<img src="../images/order.png" />
+					<span>库存</span>
+				</div>
+				<div onclick="popClose()" class="pop-close">
+					<img src="../images/close.png" />
+				</div>
+			</div>
+
+			<iframe src="#" style="height:360px"></iframe>
+		</div>
+	</body>
+</html>
+<script>
+	window.onload = function() {
+		loginVerify()
+
+		let param = getQueryString(location.href)
+		getBook(param.data.keyword)
+	}
+
+	function getBook(keyword) {
+		httpService.post('/book/search', {
+			'keyword': keyword
+		}, res => {
+			let temp = '';
+			res.forEach(i => {
+				temp +=
+					`<tr>
+
+						<td class="coverTD">
+							<a href="">
+								<img class="bookcover_img" src="../images/29159887-1_w_3.jpg" isbn="978-7-121-40863-2" bookrecno="3004374569" />
+							</a>
+						</td>
+						<td class="bookmetaTD">
+							<div class="bookmeta" bookrecno="3004374569" booktype="1">
+								<div id="bookid_3004">
+									<span class="bookmetaTitle">
+										<a class="title-link" href="" id="title_3004374569">
+											${i.bookname}
+										</a>
+									</span>
+									<span class="book_state"><span class="book_in">在馆(${i.num==null?'0':i.num})</span>
+								</div>
+								<div class="public_color">
+									书号:
+									<a class="num-link" href="" target="_blank">${i.id}</a>
+									<div class="public_color">
+										著者:
+										<a class="author-link" href="" target="_blank">${i.author}&nbsp;&nbsp;&nbsp;&nbsp;</a>
+
+										出版社:
+										<a class="publisher-link" href="" target="_blank">${i.press}</a>
+										&nbsp;&nbsp;&nbsp;&nbsp;
+
+										出版日期: <span class="year">2021&nbsp;&nbsp;&nbsp;&nbsp;</span>
+
+										类别: <span class="book_ls">${i.category}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+										<button class="borrow_btn" onclick="showbook(${i.id})">借阅</button>
+									</div>
+									<div class="detail_w">
+										详情:
+										<p>${i.describe}</p>
+									</div>
+
+								</div>
+
+						</td>
+					</tr>`;
+				$('.resultTable').innerHTML = temp;
+			})
+		}, err => {
+
+		})
+	}
+	
+	function showbook(id){
+		window.dataset = {
+			'bookId': id
+		}
+		$('.pop iframe').src = 'bookwarehouse.html';
+		$('#addUserbox').style.display = 'block';
+	}
+</script>

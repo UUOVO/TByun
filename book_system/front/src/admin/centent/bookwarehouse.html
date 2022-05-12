@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<script src="../../../js/HttpService.js"></script>
+		<script src="../../../js/util.js"></script>
+
+		<link rel="stylesheet" type="text/css" href="../public.css" />
+		<style>
+			.listtable tr{
+				height: 30px;
+
+			}
+			.listtable th,.listtable td{
+				font-size: 14px;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="list">
+			<table class="listtable">
+				<thead>
+					<tr>
+						<th>编号</th>
+						<th>状态</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!--  -->
+				</tbody>
+				<tfoot>
+					<tr>
+						<td colspan="2"><button type="button" class="btn3" onclick="addNum(this)">添加</button></td>
+					</tr>
+				</tfoot>
+			</table>
+		</div>
+	</body>
+</html>
+
+<script>
+	var bookid = 0;
+	window.onload = function() {
+		bookid = window.parent.dataset.bookId
+		httpService.post('/book/getBookNum', {
+			'bookId': bookid
+		}, res => {
+			let temp = '';
+			res.forEach(i => {
+				temp +=
+					`<tr>
+						<td>${i.id}</td>
+						<td>${i.state == 1? '在馆' : '借出'}</td>
+					</tr>`;
+			})
+			$('#list tbody').innerHTML = temp;
+		}, err => {
+
+		})
+	}
+	var st = 0;
+
+	function addNum(that) {
+		if (st == 0) {
+			$('tbody').innerHTML +=
+				`<tr>
+					<td><input type="text" name="id" value="" /></td>
+					<td>
+						<select name="state">
+							<option value="1">在馆</option>
+							<option value="0">借出</option>
+						</select>
+					</td>
+				</tr>`;
+			that.innerHTML = '确定';
+			st = 1;
+
+
+		} else if (st == 1) {
+			let id = $('tbody input');
+			let state = $('tbody select');
+			httpService.post('/book/entryBook', {
+				'bookid': bookid,
+				'state':state.value,
+				'id': id.value
+			}, res => {
+				alert(res.msg)
+				window.parent.getBookList()
+				location.reload()
+			}, err => {
+				alert(err.msg)
+			})
+			
+		}
+
+	}
+</script>

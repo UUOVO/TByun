@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
+		<title>登录界面</title>
+		<link rel="stylesheet" type="text/css" href="../css/login.css" />
+		<link rel="stylesheet" href="../css/public.css">
+		<script src="../js/HttpService.js"></script>
+		<script src="../js/util.js"></script>
+	</head>
+
+	<body>
+		<!-- 头部 -->
+		<div class="top">
+			<div class="header page">
+				<div class="logo">
+					<img src="../images/logo1x.png" alt="BaiYunLibrary">
+				</div>
+				<div class="nav">
+					<ul class="mol">
+						<li><a href="../index.html" class="active">首页</a></li>
+						<li><a href="">图书查询</a></li>
+						<li><a href="javascript:;">图书查询</a></li>
+						<li><a href="admin/admin.html">个人中心</a></li>
+					</ul>
+					<div class="btn_area">
+						<a href="" class="login">登录</a>
+						<!-- <a href="" class="reg">注册</a> -->
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- 内容 -->
+		<div id="content" class="page">
+			<div id="div2">
+				<form name="mylogin">
+					<div id="form-trueform">
+						<span id="loginfont">登录</span>
+						<p>
+							<input type="text" name="studentId" placeholder="学号" class="num" pattern="^ [a-zA-Z] [a-zA-Z0-9_] {4,15}$" />
+						</p>
+						<p>
+							<input type="password" name="password" placeholder="密码" class="pass" pattern="^ [a-zA-Z] \w{5,17}$" />
+						</p>
+						<div class="div21">
+							<input type="checkbox" style="vertical-align:middle" ; class="op" />
+							<p class="div22"><a href="####">自动登录</a></p>
+							<p class="div23"><a href="####">忘记密码？</a></p>
+						</div>
+						<p>
+							<input type="button" class="btn3" value="登录" onclick="login()" />
+						</p>
+
+					</div>
+				</form>
+			</div>
+		</div>
+
+		<!-- 版权 -->
+		<div class="page-copy page">
+			<p>版权所有©白云图书馆 粤ICP证号:20211206</p>
+		</div>
+	</body>
+</html>
+
+
+<script>
+	console.log(document.cookie)
+	window.onload = function(){
+		loginVerify();
+	}
+	
+	window.onkeydown = function(key){
+		if(key.keyCode == 13){
+			login()
+		}
+	}
+	
+	function login(){
+		let studentId = mylogin.studentId.value;
+		let password = mylogin.password.value;
+		
+		if (studentId=='' || password==''){
+			alert('账号或密码不能为空');
+			return;
+		}
+		httpService.post('/user/login',{
+			'studentId':studentId,
+			'password':password
+		},res=>{
+			res.data.token;
+			localStorage.setItem('username',res.data.username);
+			localStorage.setItem('studentId',res.data.id);
+			localStorage.setItem('role',res.data.role);
+			document.cookie = 'token='+res.data.token+';path=/';
+			location.href = '../index.html';
+		},err=>{
+			alert('账号或密码错误')
+		})
+	}
+</script>

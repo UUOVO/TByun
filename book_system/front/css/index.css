@@ -1,0 +1,115 @@
+body {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 100vh;
+	font-size: 16px;
+	font-family: "微软雅黑,Microsoft Yahei,regular";
+	background: url(../images/bg1.png);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+}
+
+.top {
+	width: 100%;
+	min-width: 100%;
+	background: #fff;
+	opacity: 0.85;
+}
+
+.contain {
+	flex: 1;
+	position: relative;
+}
+
+.title_check {
+	position: absolute;
+	display: block;
+	left: 22px;
+	top: 10px;
+}
+
+.title_check div {
+	width: 90px;
+	height: 28px;
+	line-height: 28px;
+	border-right: 1px #EBEBEB solid ;
+}
+
+.form_group {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	width: 664px;
+	transform: translate(-50%, -50%);
+}
+
+.keyword {
+	flex: 1;
+	padding-left: 120px;
+	padding-right: 10px;
+	background: none;
+	width: 530px;
+	height: 48px;
+	color: #333;
+	line-height: 30px;
+	font-size: 14px;
+	background-color: #fff;
+	border: 0;
+	opacity: 1;
+	border-radius: 8px 0px 0px 8px;
+}
+
+.submit_btn {
+	width: 112px;
+	height: 48px;
+	background: #2C8CFF;
+	opacity: 1;
+	border-radius: 0px 8px 8px 0px;
+	display: block;
+	float: right;
+	box-sizing: border-box;
+	outline: 0;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	text-align: center;
+}
+
+.submit_btn2 {
+	opacity: 0;
+	filter: alpha(opacity=0);
+	display: block;
+	float: left;
+	position: absolute;
+	right: 0;
+	top: 0;
+	z-index: 2;
+	box-sizing: border-box;
+	font-size: 18px;
+	outline: 0;
+	border: 0;
+	margin: 0;
+	padding: 0;
+	color: #fff;
+	text-align: center;
+	width: 87px;
+	height: 40px;
+}
+
+.split {
+	display: block;
+	height: 30px;
+	width: 2px;
+	margin-right: 15px;
+	margin-left: 5px;
+	float: left;
+	background-color: #eee;
+}
+
+
+#form_group_searchbox {
+	display: flex;
+}
